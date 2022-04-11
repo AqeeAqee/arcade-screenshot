@@ -5,7 +5,9 @@
 //% color=#03AA74 weight=1 icon="\uf083" 
 //% groups='["Basic", "Advanced"]'
 //% block="Snapshot"
-namespace screenshot{
+namespace screenshot{}
+
+namespace console{
 
     const hex= "0123456789abcdef"
     /**
@@ -13,7 +15,8 @@ namespace screenshot{
     * After called this function, get img define codes from "Show console device", underneath the simulator, copy and paste codes into anywhere of the Code Editor, then you could see the image by click the image icon ahead the first line of img`...`
     */
     //% blockId=takeScreenshot
-    //% block="take a shot of screen"
+    //% block="take a snapshot of Screen to console"
+    //% blockNamespace=screenshot
     //% group="Basic"
     //% weight=100
     export function takeScreenshot(){
@@ -21,13 +24,12 @@ namespace screenshot{
         let strLast=""
         // let str = "img`"
         for (let y = 0; y <screen.height;y++){
-        let    str="        "
+            let str="    "
             for(let x=0;x<screen.width;x++){
-                const c = screen.getPixel(x, y)
                 str+= hex[screen.getPixel(x,y)]
             }
             if(str==strLast)
-                str = " "+str   //avoid combine same lines by console log textbox
+                str = " "+str   //avoid be combined of same lines by console log textbox
             console.log(str)
             strLast=str
         }
@@ -37,22 +39,24 @@ namespace screenshot{
 
     /**
     * Take a screenshot of current Tilemap, and transfer its define codes to computer via usb connection. 
-    * After called this function, get Tilemap define codes from "Show console device", underneath the simulator, copy and paste codes into anywhere of the Code Editor, then you could see the tilemap by click the icon ahead the first line of these codes
+    * After called this function, get Tilemap define codes from "Show console Device", underneath the simulator, copy and paste codes into anywhere of the Code Editor, then you could see the tilemap by click the icon ahead the first line of these codes
     * [NOTE] The first can be wraped to 2 lines by console textbox, if the tiles hex string splited, join the first 2 lines together before use.
     */
-    //% blockId=takeTilemapScreenshot
-    //% block="take a shot of tilemap"
+    //% blockId=takeTilemapSnapshot
+    //% block="take a snapshot of Tilemap to console"
+    //% blockNamespace=screenshot
     //% group="Basic"
     //% weight=98
-    export function takeTilemapScreenshot(){
+    export function takeTilemapSnapshot(){
         const TM_DATA_PREFIX_LENGTH = 4;
         const TM_WALL = 2;
 
-        const data= game.currentScene().tileMap.data
-        if(!data){
-            console.log("No Tilemap loaded currently, load a tilemap first before call me.")
+        const tm = game.currentScene().tileMap
+        if(!tm||!tm.data){
+            console.log("[e] [console.takeTilemapSnapshot()] No Tilemap loaded currently, load a tilemap first before call me.")
             return
         }
+        const data = tm.data
 
         let str=""
         //tiles
@@ -76,7 +80,7 @@ namespace screenshot{
                 str += data.isWall(x, y) ? TM_WALL:"."
             }
             if (str == strLast)
-                str = " " + str   //avoid combine same lines by console log textbox
+                str = " " + str   //avoid be combined of same lines by console log textbox
             console.log(str)
             strLast = str
         }
@@ -97,7 +101,7 @@ namespace screenshot{
                         str += hex[c]
                     }
                     if (str == strLast)
-                        str = " " + str   //avoid combine same lines by console log textbox
+                        str = " " + str   //avoid be combined of same lines by console log textbox
                     console.log(str)
                     strLast = str
                 }
