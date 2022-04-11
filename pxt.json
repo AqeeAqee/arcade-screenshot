@@ -7,11 +7,11 @@
     },
     "files": [
         "README.md",
-        "main.blocks",
-        "main.ts",
         "screenshot.ts"
     ],
     "testFiles": [
+        "tilemap.g.jres",
+        "tilemap.g.ts",
         "test.ts"
     ],
     "public": true,
