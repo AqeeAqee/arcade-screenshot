@@ -151,7 +151,7 @@ namespace screenshot{
                 str+= hex[screen.getPixel(x,y)]
             }
             if(str==strLast)
-                str = " "+str
+                str = " "+str   //avoid combine same lines by console log textbox
             console.log(str)
             strLast=str
         }
